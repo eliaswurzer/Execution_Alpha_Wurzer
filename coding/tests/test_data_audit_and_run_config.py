@@ -212,14 +212,12 @@ def test_validate_run_config_accepts_locked_shape(artifact_dir: Path) -> None:
 
 
 @pytest.mark.unit
-def test_validate_run_config_rejects_icloud_and_incomplete_value_model(artifact_dir: Path) -> None:
+def test_validate_run_config_rejects_incomplete_value_model(artifact_dir: Path) -> None:
     config = _valid_config(artifact_dir)
-    config["artifact_root"] = "C:\\Users\\example\\iCloud" + "Drive\\Documents\\bad"
     del config["value_model"]["offset_grid_bps"]
 
     errors = validate_config(config, allow_missing_paths=True)
 
-    assert any("not iCloud" in error for error in errors)
     assert any("offset_grid_bps" in error for error in errors)
 
 

@@ -48,8 +48,6 @@ def _path(value: Any, label: str, errors: list[str], *, must_exist: bool, allow_
     path = Path(value)
     if not path.is_absolute():
         errors.append(f"{label} must be absolute: {value}")
-    if "iclouddrive" in str(path).lower():
-        errors.append(f"{label} must be local, not iCloud: {value}")
     if must_exist and not allow_missing and not path.exists():
         errors.append(f"{label} does not exist: {value}")
     return path
