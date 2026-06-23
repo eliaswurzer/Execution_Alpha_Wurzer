@@ -85,7 +85,7 @@ def read_json(path,symbols,sources,start,end):
 def build(reference_dir:Path,extra:list[Path],start:date,end:date):
     symbols=set(); sources=defaultdict(set); ensure_events(reference_dir/"sp500_ticker_events_2018_2019.csv")
     paths=[]
-    for pat in ("public_sp500*.txt","public_sp500*.csv","sp500_*symbols*.txt","sp500_membership_intervals.csv","sp500_ticker_events_2018_2019.csv","sp500_refinitiv_ric_to_taq_crosswalk.csv"):
+    for pat in ("public_sp500*.txt","public_sp500*.csv","sp500_*symbols*.txt","sp500_membership_intervals.csv","sp500_ticker_events_2018_2019.csv","sp500_ric_to_taq_crosswalk.csv"):
         paths+=sorted(reference_dir.glob(pat))
     sp=Path("SP500")
     if sp.exists(): paths+=sorted(sp.glob("*.csv"))+sorted(sp.glob("*.json"))

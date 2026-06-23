@@ -49,7 +49,7 @@ Tables, figures, and audit summaries
 Real-data runs are controlled through CLI arguments or environment variables,
 not personal machine defaults. The main inputs are licensed Daily TAQ Trade and
 NBBO files, point-in-time index membership data, and optional run-output
-directories. Public templates live in `coding/analysis/run_configs/`.
+directories.
 
 ### 2. Preprocessing Layer
 
@@ -102,9 +102,8 @@ out-of-sample calibration, and H3 risk-ranking diagnostics.
 
 ### 7. Test Layer
 
-`coding/tests/` contains synthetic unit and integration tests. These tests are
-designed to run without licensed market data. Tests marked `realdata` are
-excluded from the public quick-start command and require local licensed inputs.
+`coding/tests/` contains synthetic unit and integration tests. The public test
+suite is designed to run without licensed market data.
 
 ## Data Availability
 

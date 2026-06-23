@@ -1,8 +1,8 @@
 """Build the derived per-symbol listing-exchange reference map.
 
-The Refinitiv membership snapshot leaves ``listing_exchange`` empty, so H1
+The licensed membership snapshot leaves ``listing_exchange`` empty, so H1
 previously re-derived the venue from the trade tape on every run. The primary
-source here is the Refinitiv RIC root recorded in the membership
+source here is the membership RIC root recorded in the membership
 ``source_note`` column (suffix ``.N`` = NYSE, ``.OQ`` = Nasdaq, ``.Z`` =
 Cboe BZX): this is authoritative listing information and matches the known
 NYSE/Nasdaq split of the index. Only symbols without a usable RIC root fall
@@ -116,7 +116,7 @@ def build_map(
                 "votes_nyse": 0,
                 "votes_nasdaq": 0,
                 "sample_dates": "",
-                "method": "refinitiv_ric_root_v1",
+                "method": "membership_ric_root_v1",
             })
             continue
         samples = _sample_dates(available, item.start, item.end, n_samples)

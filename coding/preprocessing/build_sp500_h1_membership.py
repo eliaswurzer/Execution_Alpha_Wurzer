@@ -1,7 +1,7 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Build public-approximation S&P 500 2018-2019 membership intervals.
 
-This is a reproducible technical input, not a publication-grade Bloomberg,
+This is a reproducible technical input, not a publication-grade licensed,
 CRSP, FactSet, S&P, or another licensed point-in-time constituent file. It starts from the user-provided
 2018-01-02 S&P 500 anchor and applies local official-source additions and
 removals from SP500/official_sources_2018_2019.csv through 2019-12-31.

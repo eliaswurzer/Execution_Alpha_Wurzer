@@ -12,8 +12,6 @@ commercial crosswalks are not included.
   approximation of S&P 500 interval membership for code inspection and
   lightweight checks.
 - `sp500_ticker_events_2018_2019.csv`: public ticker-event support file.
-- `nasdaq100_membership_intervals.csv`: robustness-universe interval file
-  included where public provenance is suitable.
 - `expected_vc_identity_map.csv`: audited continuity map used by the expected
   closing-volume estimator.
 

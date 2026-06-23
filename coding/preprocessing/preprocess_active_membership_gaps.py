@@ -31,7 +31,7 @@ SIDE_DIR = {"trade": "Trade", "nbbo": "NBBO"}
 SIDE_PREFIX = {"trade": "EQY_US_ALL_TRADE", "nbbo": "EQY_US_ALL_NBBO"}
 SIDE_PARQUET_DIR = {"trade": "trades", "nbbo": "nbbo"}
 SUPPLEMENT_QUEUE = "raw_present_but_active_symbol_supplement_needed.csv"
-RAW_CHECKLIST = "required_raw_files_for_refinitiv_completion.csv"
+RAW_CHECKLIST = "required_raw_files_for_membership_completion.csv"
 
 
 @dataclass(frozen=True)
@@ -251,7 +251,7 @@ def write_queue_files(audit_dir: Path, jobs: list[SupplementJob], raw_missing: l
 def _write_symbol_file(out_dir: Path, job: SupplementJob) -> Path:
     symbol_dir = out_dir / "symbol_overrides"
     symbol_dir.mkdir(parents=True, exist_ok=True)
-    path = symbol_dir / f"{job.date}_{job.side}_active_refinitiv.txt"
+    path = symbol_dir / f"{job.date}_{job.side}_active_membership.txt"
     path.write_text("\n".join(job.symbols) + "\n", encoding="utf-8")
     return path
 

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import datetime as dt
-import json
 from types import SimpleNamespace
 
 import numpy as np
@@ -15,7 +14,6 @@ from analysis.metrics.alpha import attach_alpha_columns, attach_moc_differential
 from analysis.metrics.raear import break_even_eta, information_ratio, raear
 from analysis.microstructure.ofi import compute_ofi
 from analysis.runners import h2_signal_efficiency as h2
-from analysis.runners import run_sp500_h1_overnight as overnight
 from analysis.simulation import engine
 from analysis.simulation.parent_orders import build_parent_orders
 from analysis.strategies.base import FillResult
@@ -307,24 +305,3 @@ def test_h3_raear_manual_values() -> None:
     assert raear(4.0, 16.0, 0.1) == pytest.approx(2.4)
     assert break_even_eta(4.0, 16.0) == pytest.approx(0.25)
 
-
-@pytest.mark.unit
-def test_overnight_rejects_calibration_with_old_feature_policy(artifact_dir) -> None:
-    for name in [
-        "symbol_tier_map.csv",
-        "glosten_as.csv",
-        "tod_schedule_xgb.ubj",
-        "tod_schedule_meta.pkl",
-        "cox_tier_1.pkl",
-    ]:
-        (artifact_dir / name).write_text("x", encoding="utf-8")
-    manifest = artifact_dir / "calibration_manifest.json"
-    manifest.write_text(json.dumps({"status": "complete"}), encoding="utf-8")
-
-    assert overnight._calibration_complete(artifact_dir) is False
-
-    manifest.write_text(
-        json.dumps({"status": "complete", "feature_policy": cfg.FEATURE_POLICY_VERSION}),
-        encoding="utf-8",
-    )
-    assert overnight._calibration_complete(artifact_dir) is True

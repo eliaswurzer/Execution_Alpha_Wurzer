@@ -19,14 +19,10 @@ $env:THESIS_INDEX_MEMBERSHIP_DIR = "C:\\path\\to\\reference\\index_membership"
 $env:THESIS_TAQ_PARQUET_2018 = "C:\\path\\to\\processed\\2018"
 $env:THESIS_TAQ_PARQUET_2019 = "C:\\path\\to\\processed\\2019"
 $env:THESIS_RAW_TAQ_ROOT = "C:\\path\\to\\raw_dtaq"
-$env:THESIS_REFINITIV_CONSTITUENTS = "C:\\path\\to\\constituents_sp500.csv"
 ```
 
-The template run configuration at
-`coding/analysis/run_configs/final_2018_2019_value_aware.json` shows the
-expected shape of the final-run config. Replace the neutral placeholder paths
-with local licensed-data locations before running a full empirical pipeline.
+Full empirical runs should be configured through the runner-specific CLI flags
+and the environment variables above. Use local licensed-data locations for all
+market-data and constituent inputs before running the pipeline.
 
-The default quick tests deliberately exclude tests marked `realdata`. To run
-real-data checks, set `THESIS_ENABLE_REALDATA_TESTS=1` after configuring the
-data paths above.
+The public quick tests are synthetic and do not require licensed inputs.

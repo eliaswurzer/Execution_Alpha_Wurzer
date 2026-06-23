@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import importlib.util
 import json
@@ -375,15 +375,6 @@ def test_audit_outputs_todo_for_missing_trade_counterpart(artifact_dir: Path) ->
     assert summary["raw_trade_unprocessed_dates"] == 1
     assert summary["raw_nbbo_unprocessed_dates"] == 0
 
-
-@pytest.mark.unit
-def test_validate_final_config_shape_allows_missing_paths_before_data_arrives() -> None:
-    config_path = Path(__file__).resolve().parents[1] / "analysis" / "run_configs" / "final_2018_2019_value_aware.json"
-    payload = json.loads(config_path.read_text(encoding="utf-8-sig"))
-
-    errors = validate_config(payload, allow_missing_paths=True)
-
-    assert errors == []
 
 
 @pytest.mark.unit

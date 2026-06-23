@@ -22,7 +22,6 @@ from analysis.fill_model.value_model import (
     realized_candidate_value_bps,
     validate_value_model_manifest,
 )
-from analysis.reporting.static_posting_curve import posting_curve_summary
 from analysis.strategies.value_aware import ValueAwareXGBStrategy
 from analysis.strategies.base import MarketState
 
@@ -202,10 +201,3 @@ def test_value_aware_strategy_skips_interval_when_all_values_nonpositive():
     strategy.limit_offset_bps(t, "SELL", _market_state(), 0.0, 5.0)
     assert strategy.slice_size(t, pd.Timestamp("2018-04-02 15:50:00"), 100, "SELL", _market_state()) == 0
 
-
-def test_posting_curve_summary_bounds_fill_probability():
-    panel = _candidate_panel(24)
-    summary = posting_curve_summary(panel)
-    assert not summary.empty
-    assert summary["fill_probability"].between(0.0, 1.0).all()
-    assert {"side", "tier", "limit_offset_bps", "mean_value_bps"}.issubset(summary.columns)

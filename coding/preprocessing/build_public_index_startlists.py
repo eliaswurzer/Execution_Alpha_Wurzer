@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build public approximate 2018-01-02 S&P500/Nasdaq100 start lists.
 
-The preferred final thesis source is Bloomberg/CRSP point-in-time membership.
+The preferred final thesis source is licensed point-in-time membership.
 This script is only for a public-source technical pilot.
 """
 

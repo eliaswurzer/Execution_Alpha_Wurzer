@@ -37,5 +37,3 @@ seminar/
 # Editor and local agent state
 .vscode/
 .idea/
-.agents/
-AGENTS.md
