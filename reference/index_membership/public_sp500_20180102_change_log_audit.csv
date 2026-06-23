@@ -1,0 +1,24 @@
+effectiveDate,addition,addition_present_in_start_list,removal,removal_present_in_start_list,expected_for_20180102,passes_point_in_time_check,reasonEn
+2018-12-24,CE,False,ESRX,True,addition_absent_removal_present,True,S&P 500 constituent Cigna (NYSE: CI) acquired ESRX
+2018-12-03,LW,False,COL,True,addition_absent_removal_present,True,UTX acquired COL
+2018-12-03,MXIM,False,AET,True,addition_absent_removal_present,True,CVS acquired Aetna
+2018-12-03,FANG,False,SRCL,True,addition_absent_removal_present,True,Market Capitalization change
+2018-11-13,JKHY,False,EQT,True,addition_absent_removal_present,True,EQT spun off ETRN
+2018-11-06,KEYS,False,CA,True,addition_absent_removal_present,True,CA acquired by Broadcom.
+2018-10-11,FTNT,False,EVHC,True,addition_absent_removal_present,True,EVHC acquired by KKR.
+2018-10-01,ROL,False,ANDV,True,addition_absent_removal_present,True,ANDV acquired by Marathon Petroleum.
+2018-09-14,WCG,False,XL,True,addition_absent_removal_present,True,XL acquired by Axa.
+2018-08-28,ANET,False,GGP,True,addition_absent_removal_present,True,GGP acquired by Brookfield Property Partners.
+2018-07-02,CPRT,False,DPS,True,addition_absent_removal_present,True,DPS acquired by Keurig Green Mountain.
+2018-06-20,FLT,False,TWX,True,addition_absent_removal_present,True,AT&T acquired Time Warner.
+2018-06-18,BR,False,RRC,True,addition_absent_removal_present,True,Market capitalization change.
+2018-06-18,HFC,False,AYI,True,addition_absent_removal_present,True,Market capitalization change.
+2018-06-07,TWTR,False,MON,True,addition_absent_removal_present,True,Bayer acquired Monsanto.
+2018-06-05,EVRG,False,NAVI,True,addition_absent_removal_present,True,Westar Energy (NYSE: WR) acquired Great Plains Energy (NYSE: GXP) and changed name to Evergy.
+2018-05-31,ABMD,False,WYN,True,addition_absent_removal_present,True,Wyndham Worldwide spun off Wyndham Hotels & Resorts(NYSE:WH).
+2018-04-04,MSCI,False,CSRA,True,addition_absent_removal_present,True,S&P 500 constituent General Dynamics(NYSE: GD) acquired CSRA.
+2018-03-19,TTWO,False,SIG,True,addition_absent_removal_present,True,Market capitalization change.
+2018-03-19,SIVB,False,PDCO,True,addition_absent_removal_present,True,Market capitalization change.
+2018-03-19,NKTR,False,CHK,True,addition_absent_removal_present,True,Market capitalization change.
+2018-03-07,IPGP,False,SNI,True,addition_absent_removal_present,True,Discovery Communications acquired SNI.
+2018-01-03,HII,False,BCR,True,addition_absent_removal_present,True,Becton Dickinson acquired BCR.

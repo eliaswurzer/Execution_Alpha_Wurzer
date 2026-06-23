@@ -1,0 +1,52 @@
+﻿{
+  "change_log_audit": {
+    "additions_already_in_corrected_list": [],
+    "audit_file": "reference/index_membership/public_sp500_20180102_change_log_audit.csv",
+    "events_checked": 23,
+    "events_failing_point_in_time_check": 0,
+    "interpretation": "After adding BCR, DPS, and WYN, the corrected technical pilot roster passes the local 2018 change-log audit.",
+    "removals_missing_from_corrected_list": []
+  },
+  "count_validation": {
+    "count_is_plausible": true,
+    "expected_approx_range": "about 500 securities; S&P 500 commonly has more than 500 tickers because some companies have multiple share classes",
+    "note_after_correction": "After adding BCR, DPS, and WYN, the technical pilot roster has 508 securities.",
+    "note_after_historical_corrections": "Future/current tickers in the user anchor were mapped to observed 2018-01-02 TAQ symbols where verified in raw Trade/NBBO files.",
+    "source_symbols_count": 508,
+    "taq_unique_symbols_count_after_historical_corrections": 505
+  },
+  "date": "2018-01-02",
+  "historical_taq_symbol_corrections": {
+    "BKNG": "PCLN",
+    "CBRE": "CBG",
+    "CMCSA": "CMCS A",
+    "CPRI": "KORS",
+    "DISCA": "DISC A",
+    "DISCK": "DISC K",
+    "JEF": "LUK",
+    "KDP": "DPS",
+    "WELL": "HCN",
+    "WYND": "WYN"
+  },
+  "index_id": "sp500",
+  "normalizations": {
+    "GOOGL": "GOOG L",
+    "META": "FB for pre-2022 dates if encountered",
+    "dot_or_slash_share_class": "replaced with TAQ space convention, e.g. BRK.B -> BRK B"
+  },
+  "not_publication_grade": true,
+  "note": "Use as technical preprocessing pilot anchor only. Prefer independently licensed point-in-time membership for final thesis sample.",
+  "point_in_time_corrections_applied": {
+    "added_symbols": [
+      "BCR",
+      "DPS",
+      "WYN"
+    ],
+    "date_applied": "2026-06-03",
+    "reason": "These removals occur after 2018-01-02, so the removed securities should be present in a Jan-2 start roster.",
+    "source": "SP500/changes.json audit"
+  },
+  "source": "user_provided_in_chat",
+  "source_symbols_count": 508,
+  "taq_unique_symbols_count": 505
+}

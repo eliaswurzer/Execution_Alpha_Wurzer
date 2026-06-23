@@ -1,0 +1,12 @@
+duckdb
+matplotlib
+numpy
+pandas
+polars
+psutil
+pyarrow
+pytest
+PyYAML
+scipy
+seaborn
+xgboost

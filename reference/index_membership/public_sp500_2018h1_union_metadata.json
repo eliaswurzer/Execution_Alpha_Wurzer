@@ -1,0 +1,27 @@
+{
+  "base_file": "public_sp500_20180102_taq_symbols.txt",
+  "base_symbols": 505,
+  "changes_file": "SP500/changes.json",
+  "date_range": {
+    "end": "2018-06-29",
+    "start": "2018-01-02"
+  },
+  "h1_additions_count": 12,
+  "h1_additions_from_changes": [
+    "ABMD",
+    "BR",
+    "EVRG",
+    "FLT",
+    "HFC",
+    "HII",
+    "IPGP",
+    "MSCI",
+    "NKTR",
+    "SIVB",
+    "TTWO",
+    "TWTR"
+  ],
+  "index_id": "sp500",
+  "note": "Preprocessing union for coverage only: start roster plus S&P 500 additions through 2018-06-29. Membership timing must still be handled by an index membership panel in evaluation.",
+  "union_symbols": 517
+}

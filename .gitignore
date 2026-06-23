@@ -1,0 +1,43 @@
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Licensed or generated data
+data/
+artifacts/
+coding/artifacts/
+coding/**/artifacts/
+tmp/
+volume/
+*.parquet
+*.duckdb
+*.pkl
+*.ubj
+*.gz
+*.zip
+*.log
+
+# Documents and local research material
+*.pdf
+*.docx
+*.xlsx
+*.ipynb
+literatur*/
+Colloquium/
+seminar/
+
+# Editor and local agent state
+.vscode/
+.idea/
+.agents/
+.claude/
+CLAUDE.md
+AGENTS.md

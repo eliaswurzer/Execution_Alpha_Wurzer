@@ -1,0 +1,13 @@
+old_symbol,new_symbol,effective_date,event_type,source,source_note
+PCLN,BKNG,2018-02-27,ticker_change,conservative_manual_seed,Priceline renamed Booking Holdings
+HCN,WELL,2018-02-28,ticker_change,conservative_manual_seed,Welltower ticker change
+CBG,CBRE,2018-03-20,ticker_change,conservative_manual_seed,CBRE Group ticker change
+LUK,JEF,2018-05-24,ticker_change,conservative_manual_seed,Leucadia renamed Jefferies Financial Group
+WR,EVRG,2018-06-05,merger_ticker_change,conservative_manual_seed,Westar/Evergy mapping
+DWDP,DD,2019-06-03,spin_or_rename,conservative_manual_seed,DowDuPont/DuPont mapping
+BMS,AMCR,2019-06-11,replacement_or_mapping,conservative_manual_seed,Bemis/Amcor mapping
+HRS,LHX,2019-07-01,merger_ticker_change,conservative_manual_seed,Harris/L3Harris mapping
+CBS,VIAC,2019-12-05,merger_ticker_change,conservative_manual_seed,CBS/ViacomCBS mapping
+BBT,TFC,2019-12-09,merger_ticker_change,conservative_manual_seed,BB&T/Truist mapping
+BCR,BDX,2018-01-02,acquisition_mapping,conservative_manual_seed,Bard/Becton Dickinson boundary
+TWX,FLT,2018-06-20,index_replacement_boundary,conservative_manual_seed,H1 public change log replacement

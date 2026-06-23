@@ -1,0 +1,367 @@
+version: thesis_figure_suite_v1
+figures:
+  - id: fig_data_coverage
+    plot_type: heatmap
+    source: {artifact: h1_panel}
+    transform: data_coverage
+    table: {path: figure_inputs/fig_data_coverage.csv}
+    aesthetics: {index: tier_label, columns: month, value: coverage_pct, cmap: sequential, annotate: false, fmt: ".1f"}
+    layout: {profile: heatmap, title: Liquidity tier, xlabel: Month, ylabel: "", colorbar_label: Coverage (%), vmin: 99.5, vmax: 100, ytick_rotation: 0}
+    latex:
+      caption: Data Coverage of the Evaluation Panel
+      label: fig:data-coverage-template
+      notes: This figure shows monthly simulation coverage by liquidity tier for the validated evaluation panel. Coverage is defined as successfully simulated symbol-days divided by eligible active member symbol-days within each month and tier. Values below complete coverage reflect structured noncritical exclusions before simulation rather than trade or quote coverage failures. Cell annotations are omitted for legibility.
+      include_width: "0.82\\textwidth"
+    required_columns: [tier_label, month, coverage_pct]
+
+  - id: fig_close_volume_share
+    plot_type: line_panels
+    source: {artifact: volume_db}
+    transform: close_volume_share
+    table: {path: figure_inputs/fig_close_volume_share.csv}
+    aesthetics:
+      panel: year
+      x: date
+      y: close_share_pct
+      hue: series
+      color_role: tier
+      marker: null
+      order: [All, Tier 1, Tier 2, Tier 3]
+      emphasize: All
+      emphasize_dashed: true
+      emphasize_line_width: 1.35
+      emphasize_zorder: 6
+      default_zorder: 3
+    layout:
+      profile: two_panel
+      xlabel: Date
+      ylabel: Closing-auction share (%)
+      legend_title: Liquidity tier
+      sharex: false
+      legend_mode: figure
+      legend_loc: lower center
+      legend_bbox_to_anchor: [0.5, 1.14]
+      legend_ncols: 4
+      ymin: 0
+      line_width: 1.1
+      x_grid: true
+      x_minor_grid: true
+      date_major_month_interval: 2
+      date_minor_month_interval: 1
+      date_format: "%Y-%m"
+    latex:
+      caption: Closing-Auction Share of Consolidated Dollar Volume
+      label: fig:close-volume-share-template
+      notes: This figure plots the daily closing-auction share of consolidated dollar volume by liquidity tier. The dashed black line is the full active S\&P 500 panel; colored lines show Tiers 1--3. Early-close sessions and the unavailable TAQ day are excluded.
+      include_width: "0.88\\textwidth"
+    required_columns: [date, year, series, n_symbols, total_daily_dollar_volume, close_auction_dollar_volume, close_share_pct]
+
+  - id: fig_close_volume_share_trend_appendix
+    plot_type: line_fit_panels
+    source: {artifact: figure_inputs}
+    transform: close_volume_share_trend_appendix
+    table: {path: figure_inputs/fig_close_volume_share_trend_appendix.csv}
+    aesthetics:
+      panel: series
+      x: date
+      y: close_share_pct
+      fit: fitted_close_share_pct
+      color_role: tier
+      order: [All, Tier 1, Tier 2, Tier 3]
+      emphasize: All
+    layout:
+      profile: appendix_four_panel
+      xlabel: Date
+      ylabel: Closing-auction Share (%)
+      legend_title: Metric
+      legend_loc: lower center
+      legend_bbox_to_anchor: [0.5, 1.28]
+      legend_ncols: 2
+      ymin: 0
+      x_grid: true
+      x_minor_grid: true
+      date_major_month_interval: 2
+      date_minor_month_interval: 1
+      date_format: "%Y-%m"
+      tight_rect: [0.035, 0.0, 1.0, 0.96]
+    latex:
+      caption: Closing-Auction Share Trend by Liquidity Tier
+      label: fig:appendix-close-share-trend
+      notes: This figure plots the daily closing-auction share of consolidated dollar volume and the corresponding descriptive linear fitted trend for the full active panel and each liquidity tier. Tier colors follow the ordinal sequential scale and the All reference is black. The fitted values use the trading-day index from Table~\ref{tab:close-share-trend}.
+      include_width: "0.95\\linewidth"
+    required_columns: [date, series, tau, close_share_pct, fitted_close_share_pct]
+
+  - id: fig_fill_model_oos_calibration
+    plot_type: bar_panels
+    source: {artifact: stats_dir}
+    transform: fill_model_oos_calibration
+    table: {path: figure_inputs/fig_fill_model_oos_calibration.csv}
+    aesthetics: {panel: metric, x: model_label, y: value, hue: tier_label, color_role: tier}
+    layout:
+      profile: two_panel_wide
+      xlabel: ""
+      ylabel: ""
+      legend_title: Liquidity tier
+      legend_mode: figure
+      legend_loc: lower center
+      legend_bbox_to_anchor: [0.5, 1.02]
+      legend_ncols: 3
+      xtick_rotation: 20
+      xtick_labels:
+        Cox: Cox
+        Kaplan-Meier: KM
+        XGBoost: XGB
+        Cox proportional hazards: Cox
+        Kaplan-Meier: KM
+        XGBoost survival: XGB
+    latex:
+      caption: Out-of-Sample Fill-Model Discrimination and Calibration
+      label: fig:fill-model-oos-calibration
+      notes: The left panel plots AUC by model and liquidity tier. The right panel plots the absolute difference between the realized event rate and the mean predicted fill probability in percentage points. Tier colors follow the ordinal sequential scale.
+      include_width: "0.98\\textwidth"
+    required_columns: [metric, model_label, tier_label, value]
+
+  - id: fig_alpha_decomposition
+    plot_type: stacked_bar
+    source: {artifact: h1_panel}
+    transform: alpha_decomposition
+    table: {path: figure_inputs/fig_alpha_decomposition.csv}
+    aesthetics:
+      x: label
+      color_role: component
+      components: [gross_alpha, maker_rebate, commission, self_impact]
+      component_labels: {gross_alpha: Gross alpha, maker_rebate: Maker rebate, commission: Commission, self_impact: Self-impact}
+      points: [net_alpha, as_component]
+      point_labels: {net_alpha: Net alpha, as_component: AS markout}
+    layout:
+      profile: wide
+      xlabel: ""
+      ylabel: Basis points
+      legend_title: Component / marker
+      legend_loc: lower center
+      legend_bbox_to_anchor: [0.5, 1.02]
+      legend_ncols: 3
+      xtick_rotation: 0
+      xtick_labels:
+        S0 MOC: "S0\nMOC"
+        S1 Static: "S1\nStatic"
+        S2 Time-Adaptive: "S2\nTime-Adaptive"
+        S3 OFI: "S3\nOFI"
+        S3 IMB: "S3\nIMB"
+        S3 Full: "S3\nFull"
+        S4 TOD: "S4\nTOD"
+    latex:
+      caption: Decomposition of Net Execution Alpha by Strategy
+      label: fig:alpha-decomposition-template
+      notes: Bars decompose mean net execution alpha into gross alpha and cash adjustments. Black markers show net alpha; open triangles show the signed adverse-selection markout within gross alpha.
+      include_width: "0.88\\textwidth"
+    required_columns: [label, gross_alpha, maker_rebate, commission, self_impact, net_alpha, as_component]
+
+  - id: fig_alpha_fill_frontier
+    plot_type: scatter
+    source: {artifact: h1_panel}
+    transform: alpha_fill_frontier
+    table: {path: figure_inputs/fig_alpha_fill_frontier.csv}
+    aesthetics:
+      x: fill_rate
+      y: net_alpha
+      label: label
+      color_role: strategy
+      label_fontsize: 10
+      legend_by_label: true
+      show_labels: false
+      marker_size: 28
+      marker_alpha: 0.72
+      marker_edgecolor: black
+      marker_linewidth: 0.65
+      marker_halo: true
+      marker_halo_size: 44
+      marker_halo_edgecolor: white
+      marker_halo_linewidth: 2.2
+      point_nudges:
+        S3 OFI: {dx: -0.0030, dy: -0.0028}
+        S3 IMB: {dx: -0.0030, dy: 0.0028}
+        S3 Full: {dx: 0.0030, dy: 0.0028}
+        S4 TOD: {dx: 0.0030, dy: -0.0028}
+      label_offsets:
+        S0 MOC: {xytext: [7, 8], ha: left}
+        S1 Static: {xytext: [7, 8], ha: left}
+        S2 Time-Adaptive: {xytext: [-12, 36], ha: right}
+        S3 OFI: {xytext: [-12, 18], ha: right}
+        S3 IMB: {xytext: [-12, 0], ha: right}
+        S3 Full: {xytext: [8, -8], ha: left}
+        S4 TOD: {xytext: [8, 10], ha: left}
+    layout: {profile: single, xlabel: Realized passive fill rate, ylabel: Net execution alpha (bps), hline: 0, x_grid: true, legend_title: Strategy, legend_loc: lower center, legend_bbox_to_anchor: [0.5, 1.28], legend_ncols: 4}
+    latex:
+      caption: Net Execution Alpha against Realized Passive Fill Rate
+      label: fig:alpha-fill-frontier-template
+      notes: This figure plots strategy-level mean net execution alpha against the mean realized passive fill rate. Point colors identify the strategy; the Market-on-Close benchmark is black and the headline S3 Full strategy is purple.
+      include_width: "0.88\\textwidth"
+    required_columns: [label, fill_rate, net_alpha]
+
+  - id: fig_h2_heatmap
+    plot_type: heatmap
+    source: {artifact: h2_per_bin}
+    transform: h2_heatmap
+    table: {path: figure_inputs/fig_h2_heatmap.csv}
+    aesthetics: {index: label, columns: bin_label, value: mean, cmap: diverging, annotate: true, annotate_fontsize: 10, fmt: ".2f"}
+    layout: {profile: heatmap, xlabel: Realized S2 fill-rate bin, ylabel: "", colorbar_label: Net-alpha differential (bps), center: 0}
+    latex:
+      caption: Signal Contributions by Fill-Rate Bin
+      label: fig:h2-signal-heatmap-template
+      notes: This figure maps the matched net-alpha differentials of the S3 variants against S2 across realized fill-rate bins. Orange cells indicate negative differentials, purple cells indicate positive differentials, and the neutral midpoint is zero. Cell values are in basis points.
+      include_width: "0.88\\textwidth"
+    required_columns: [label, bin_label, mean]
+
+  - id: fig_raear_curve
+    plot_type: line
+    source: {artifact: h3_raear}
+    transform: raear_curve
+    table: {path: figure_inputs/fig_raear_curve.csv}
+    aesthetics: {x: eta, y: raear, hue: label, color_role: strategy, marker: null, emphasize: S0 MOC}
+    layout: {profile: wide, xlabel: "Risk aversion $\\eta$ (bps$^{-1}$)", ylabel: RAEAR (bps), hline: 0, x_grid: true, legend_title: Strategy, legend_loc: lower center, legend_bbox_to_anchor: [0.5, 1.02], legend_ncols: 3, line_width: 1.35}
+    latex:
+      caption: Risk-Adjusted Execution Alpha across the Risk-Aversion Grid
+      label: fig:raear-curve-template
+      notes: This figure plots the RAEAR of each strategy as a function of the risk-aversion coefficient. Colors identify strategies; all passive strategies remain below the Market-on-Close benchmark over the plotted grid, so no crossings occur.
+      include_width: "0.88\\textwidth"
+    required_columns: [eta, label, raear]
+
+  - id: fig_alt_vs_queue_diagnostics
+    plot_type: bar_panels
+    source: {artifact: stats_dir}
+    transform: alt_vs_queue_diagnostics
+    table: {path: figure_inputs/fig_alt_vs_queue_diagnostics.csv}
+    aesthetics: {panel: metric_label, x: spec_label, y: mean_diff, hue: spec_group, color_role: spec_group}
+    layout:
+      profile: three_panel_wide
+      xlabel: ""
+      ylabel: Change vs. queue-aware replay
+      hline: 0
+      legend_title: Spec group
+      legend_mode: figure
+      legend_loc: lower center
+      legend_bbox_to_anchor: [0.5, 1.02]
+      legend_ncols: 2
+      legend_labels:
+        Tape replay: Tape
+        Model-based: Model
+      xtick_rotation: 90
+      xtick_labels:
+        Strictly-through replay: Strict
+        At-or-through replay: At+
+        Cox proportional hazards: Cox
+        Kaplan-Meier: KM
+        XGBoost survival: XGB
+    latex:
+      caption: Paired Fill-Specification Diagnostics Relative to Queue-Aware Replay
+      label: fig:alt-vs-queue-diagnostics
+      notes: This figure plots the change in S3-full net alpha, fill rate, and realized adverse-selection markout for each alternative fill specification relative to the headline queue-aware replay. Purple bars identify tape-replay specifications and orange bars identify model-based specifications.
+      include_width: "0.98\\textwidth"
+    required_columns: [metric_label, spec_label, spec_group, mean_diff]
+
+  - id: fig_fill_spec_frontier
+    plot_type: scatter
+    source: {artifact: fill_spec}
+    transform: fill_spec_frontier
+    table: {path: figure_inputs/fig_fill_spec_frontier.csv}
+    aesthetics:
+      x: fill_rate
+      y: net_alpha
+      label: spec_label
+      marker_by: spec_group
+      color_role: spec_group
+      label_fontsize: 10
+      label_aliases:
+        Queue-aware replay: Queue
+        Strictly-through replay: Strict
+        At-or-through replay: At+
+        Cox proportional hazards: Cox
+        Kaplan-Meier: KM
+        XGBoost survival: XGB
+      label_offsets:
+        Queue-aware replay: {xytext: [-12, -20], ha: right}
+        Strictly-through replay: {xytext: [8, 14], ha: left}
+        At-or-through replay: {xytext: [8, 12], ha: left}
+        Cox proportional hazards: {xytext: [-12, 24], ha: right}
+        Kaplan-Meier: {xytext: [-12, 5], ha: right}
+        XGBoost survival: {xytext: [-12, -14], ha: right}
+    layout: {profile: single, xlabel: Realized passive fill rate, ylabel: Net execution alpha vs. MOC (bps), hline: 0, x_grid: true, legend_title: Spec group, legend_loc: lower center, legend_bbox_to_anchor: [0.5, 1.02], legend_ncols: 2, legend_labels: {Tape replay: Tape, Model-based: Model}}
+    latex:
+      caption: Net Execution Alpha against Fill Rate across Fill Specifications
+      label: fig:fill-spec-frontier-template
+      notes: This figure plots the Window-B S3-full net-execution-alpha differential against MOC against the realized passive fill rate, one point per implemented fill specification. Colors identify the fill-specification group.
+      include_width: "0.88\\textwidth"
+    required_columns: [spec_label, spec_group, fill_rate, net_alpha]
+
+  - id: fig_as_horizon_robustness
+    plot_type: line
+    source: {artifact: as_horizon}
+    transform: as_horizon_robustness
+    table: {path: figure_inputs/fig_as_horizon_robustness.csv}
+    aesthetics: {x: horizon_seconds, y: value, hue: series, color_role: metric, marker: o}
+    layout:
+      profile: single
+      xlabel: "Adverse-selection horizon (seconds, log scale)"
+      ylabel: Basis points
+      xscale: log
+      hline: 0
+      vline: 30
+      legend_title: Metric
+      legend_loc: lower center
+      legend_bbox_to_anchor: [0.5, 1.02]
+      legend_ncols: 3
+      legend_labels:
+        Adverse-selection markout: AS markout
+        Adverse-selection component: AS component
+        Net alpha vs. MOC: Net alpha
+    latex:
+      caption: Adverse-Selection Markout across Measurement Horizons
+      label: fig:as-horizon-robustness
+      notes: This figure plots horizon-dependent adverse-selection diagnostics and close-anchored net alpha for the S3-full headline cell. Colors identify the metric series consistently across robustness figures.
+      include_width: "0.88\\textwidth"
+    required_columns: [horizon_seconds, series, value]
+
+  - id: fig_parent_size_robustness
+    plot_type: line_panels
+    source: {artifact: size_grid}
+    transform: parent_size_robustness
+    table: {path: figure_inputs/fig_parent_size_robustness.csv}
+    aesthetics: {panel: panel, x: parent_size_pct, y: value, hue: series, color_role: metric, ci_low: ci_low, ci_high: ci_high, marker: o}
+    layout:
+      profile: two_panel
+      xlabel: Parent size (% expected close volume)
+      ylabel: ""
+      hline: 0
+      legend_title: Metric
+      legend_mode: figure
+      legend_loc: lower center
+      legend_bbox_to_anchor: [0.5, 1.12]
+      legend_ncols: 3
+      line_width: 1.35
+      x_major_step: 1
+      x_grid: true
+      legend_labels:
+        Adverse-selection markout: AS markout
+        Passive fill rate: Fill rate
+        Net alpha vs. MOC: Net alpha
+    latex:
+      caption: Parent-Size Robustness of S3 Full
+      label: fig:parent-size-robustness
+      notes: The upper panel plots the S3-full net-alpha differential against MOC across the Window-B parent-size grid, with 95 percent confidence intervals. The lower panel plots passive fill rate and adverse-selection markout. Colors identify the metric series consistently across robustness figures.
+      include_width: "0.88\\textwidth"
+    required_columns: [panel, parent_size_pct, series, value]
+
+  - id: fig_rolling_stability
+    plot_type: line_ci
+    source: {artifact: h1_panel}
+    transform: rolling_stability
+    table: {path: figure_inputs/fig_rolling_stability.csv}
+    aesthetics: {x: window_end, y: mean_alpha, ci_low: ci_low, ci_high: ci_high}
+    layout: {profile: wide, xlabel: Window end, ylabel: "Rolling six-month net alpha vs. MOC (bps)", hline: 0}
+    latex:
+      caption: Within-Sample Stability of Net Execution Alpha
+      label: fig:rolling-stability-template
+      notes: This figure plots overlapping six-month panel means of the S3-full net-alpha differential against MOC. The purple line is the headline S3 Full series and the shaded band is the 95 percent confidence interval.
+      include_width: "0.88\\textwidth"
+    required_columns: [window_end, mean_alpha, ci_low, ci_high]
