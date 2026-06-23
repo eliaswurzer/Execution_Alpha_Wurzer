@@ -19,6 +19,93 @@ alpha and tracking-error metrics, hypothesis tests, and figure/table rendering.
 - `reference/index_membership/`: public or technical reference files and schema
   examples.
 
+## Architecture Overview
+
+The repository is organized as a reproducible research pipeline. Each layer is
+kept separate so that licensed data access, empirical simulation, statistical
+testing, and thesis reporting can be inspected independently.
+
+```text
+Licensed inputs and run configuration
+        |
+        v
+Preprocessing and reference universe construction
+        |
+        v
+Volume database and microstructure feature construction
+        |
+        v
+Strategy simulation and fill-model robustness
+        |
+        v
+Alpha, tracking-error, and hypothesis-test outputs
+        |
+        v
+Tables, figures, and audit summaries
+```
+
+### 1. Configuration and Inputs
+
+Real-data runs are controlled through CLI arguments or environment variables,
+not personal machine defaults. The main inputs are licensed Daily TAQ Trade and
+NBBO files, point-in-time index membership data, and optional run-output
+directories. Public templates live in `coding/analysis/run_configs/`.
+
+### 2. Preprocessing Layer
+
+`coding/preprocessing/` converts raw Trade and NBBO inputs into analysis-ready
+per-date, per-symbol files. It also contains data-availability and transition
+audits used to verify that the empirical universe has complete trade and quote
+coverage before simulation.
+
+### 3. Reference Universe Layer
+
+`reference/index_membership/` documents the expected membership schema and
+contains public approximation files suitable for code inspection and lightweight
+checks. The final empirical thesis run used licensed point-in-time constituent
+inputs that are not redistributed here.
+
+### 4. Volume Layer
+
+`coding/volume/` builds the volume database used for daily volume, closing
+auction volume, intraday bucket shares, and expected closing-volume estimates.
+These outputs determine parent-order sizing and support the liquidity and
+sample-construction diagnostics.
+
+### 5. Core Analysis Layer
+
+`coding/analysis/` contains the empirical engine:
+
+- `data/` loads TAQ-derived inputs, membership intervals, listing labels, and
+  stress-day calendars.
+- `microstructure/` builds spread, order-flow imbalance, signing, and imbalance
+  features.
+- `strategies/` defines the Market-on-Close benchmark, static passive,
+  time-adaptive, signal-conditioned, and value-aware strategy rules.
+- `simulation/` replays the trade tape against posted limit orders and routes
+  any residual quantity to the closing auction.
+- `fill_model/` implements Cox, Kaplan-Meier, XGBoost, adverse-selection, and
+  schedule-model robustness components.
+- `metrics/` computes execution alpha, fill rates, tracking-error variance, and
+  risk-adjusted execution alpha.
+- `inference/` implements clustered inference, bootstrap diagnostics, and power
+  calculations.
+- `reporting/` renders thesis-style tables and figures from validated outputs.
+- `runners/` provides command-line entry points for the hypothesis pipeline,
+  robustness passes, audits, and reporting exports.
+
+### 6. Statistical Testing Layer
+
+`coding/statistical_tests/` contains supplementary statistical routines and
+method checks used to assess the economic tests, multiple-testing controls,
+out-of-sample calibration, and H3 risk-ranking diagnostics.
+
+### 7. Test Layer
+
+`coding/tests/` contains synthetic unit and integration tests. These tests are
+designed to run without licensed market data. Tests marked `realdata` are
+excluded from the public quick-start command and require local licensed inputs.
+
 ## Data Availability
 
 Licensed raw DTAQ files, processed Parquet files, commercial constituent
